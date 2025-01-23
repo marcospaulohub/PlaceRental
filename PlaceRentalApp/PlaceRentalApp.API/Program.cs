@@ -1,4 +1,6 @@
 
+using PlaceRentalApp.API.Middlewares;
+
 namespace PlaceRentalApp.API
 {
     public class Program
@@ -6,6 +8,10 @@ namespace PlaceRentalApp.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Adiciona ApiExceptionHandler
+            builder.Services.AddExceptionHandler<ApiExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
             // Add services to the container.
 
@@ -15,6 +21,9 @@ namespace PlaceRentalApp.API
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            // Adiciona ApiExceptionHandler
+            app.UseExceptionHandler();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
