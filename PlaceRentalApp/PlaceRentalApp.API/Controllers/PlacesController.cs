@@ -64,5 +64,21 @@ namespace PlaceRentalApp.API.Controllers
             return NoContent();
         }
 
+        // POST api/places/1234/photos
+        [HttpPost("{id}/photos")]
+        public IActionResult PostPhoto(int id, IFormFile file)
+        {
+            var description = $"File: {file.FileName}, Size: {file.Length}";
+
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+
+                var fileBytes = ms.ToArray();
+                var base64 = Convert.ToBase64String(fileBytes);
+
+                return Ok(new { description, base64 });
+            }
+        }
     }
 }
