@@ -1,0 +1,15 @@
+﻿namespace PlaceRentalApp.API.Entities
+{
+    public class Amenity : BaseEntity
+    {
+        public Amenity(string description, int idPlace)
+            : base()
+        {
+            Description = description;
+            IdPlace = idPlace;
+        }
+
+        public string Description { get; private set; }
+        public int IdPlace { get; private set; }
+    }
+}
