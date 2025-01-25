@@ -2,7 +2,7 @@
 using PlaceRentalApp.Core.Entities;
 using PlaceRentalApp.Core.ValueObjects;
 using PlaceRentalApp.API.Models;
-using PlaceRentalApp.API.Persistence;
+using PlaceRentalApp.Infrastructure.Persistence;
 
 namespace PlaceRentalApp.API.Controllers
 {
@@ -37,8 +37,8 @@ namespace PlaceRentalApp.API.Controllers
 
         //GET api/places/1234
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) 
-        { 
+        public IActionResult GetById(int id)
+        {
             var place = _context.Places.SingleOrDefault(p => p.Id == id);
 
             if (place is null)
@@ -51,7 +51,7 @@ namespace PlaceRentalApp.API.Controllers
 
         //POST api/places
         [HttpPost]
-        public IActionResult Post(CreatePlaceInputModel model) 
+        public IActionResult Post(CreatePlaceInputModel model)
         {
             var addres = new Address(
                 model.Address.Street,
@@ -81,7 +81,7 @@ namespace PlaceRentalApp.API.Controllers
 
         //PUT api/places/1234
         [HttpPut("{id}")]
-        public IActionResult Put(int id,UpdatePlaceInputModel model) 
+        public IActionResult Put(int id, UpdatePlaceInputModel model)
         {
             var place = _context.Places.SingleOrDefault(p => p.Id == id);
 
@@ -97,7 +97,7 @@ namespace PlaceRentalApp.API.Controllers
 
             return NoContent();
         }
-        
+
         // DELETE api/places/1234 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

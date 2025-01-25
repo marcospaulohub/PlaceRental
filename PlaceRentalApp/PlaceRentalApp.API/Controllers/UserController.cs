@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PlaceRentalApp.Core.Entities;
 using PlaceRentalApp.API.Models;
-using PlaceRentalApp.API.Persistence;
+using PlaceRentalApp.Infrastructure.Persistence;
 
 namespace PlaceRentalApp.API.Controllers
 {
@@ -42,4 +42,3 @@ namespace PlaceRentalApp.API.Controllers
 
     }
 }
- 

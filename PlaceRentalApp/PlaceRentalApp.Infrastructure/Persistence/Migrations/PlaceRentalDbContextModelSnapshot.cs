@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PlaceRentalApp.API.Persistence;
+using PlaceRentalApp.Infrastructure.Persistence;
 
 #nullable disable
 
-namespace PlaceRentalApp.API.Persistence.Migrations
+namespace PlaceRentalApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(PlaceRentalDbContext))]
-    [Migration("20250125184422_FirstMigration")]
-    partial class FirstMigration
+    partial class PlaceRentalDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

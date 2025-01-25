@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlaceRentalApp.Core.Entities;
 
-namespace PlaceRentalApp.API.Persistence
+namespace PlaceRentalApp.Infrastructure.Persistence
 {
     public class PlaceRentalDbContext : DbContext
     {
