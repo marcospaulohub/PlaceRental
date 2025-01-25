@@ -1,5 +1,6 @@
 
 using PlaceRentalApp.API.Middlewares;
+using PlaceRentalApp.API.Persistence;
 
 namespace PlaceRentalApp.API
 {
@@ -14,6 +15,8 @@ namespace PlaceRentalApp.API
             builder.Services.AddProblemDetails();
 
             // Add services to the container.
+
+            builder.Services.AddSingleton<PlaceRentalDbContext>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
