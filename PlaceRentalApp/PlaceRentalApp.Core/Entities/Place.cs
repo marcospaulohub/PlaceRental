@@ -1,7 +1,7 @@
-﻿using PlaceRentalApp.API.Enums;
-using PlaceRentalApp.API.ValueObjects;
+﻿using PlaceRentalApp.Core.Enums;
+using PlaceRentalApp.Core.ValueObjects;
 
-namespace PlaceRentalApp.API.Entities
+namespace PlaceRentalApp.Core.Entities
 {
     public class Place : BaseEntity
     {

@@ -1,4 +1,4 @@
-﻿namespace PlaceRentalApp.API.Enums
+﻿namespace PlaceRentalApp.Core.Enums
 {
     public enum PlaceStatus
     {

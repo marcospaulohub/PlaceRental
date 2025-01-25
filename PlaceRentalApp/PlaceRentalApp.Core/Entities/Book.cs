@@ -1,4 +1,4 @@
-﻿namespace PlaceRentalApp.API.Entities
+﻿namespace PlaceRentalApp.Core.Entities
 {
     public class Book : BaseEntity
     {

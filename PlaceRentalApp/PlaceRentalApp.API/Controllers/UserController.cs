@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlaceRentalApp.API.Entities;
+using PlaceRentalApp.Core.Entities;
 using PlaceRentalApp.API.Models;
 using PlaceRentalApp.API.Persistence;
 

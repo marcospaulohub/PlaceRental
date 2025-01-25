@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlaceRentalApp.API.Entities;
+using PlaceRentalApp.Core.Entities;
+using PlaceRentalApp.Core.ValueObjects;
 using PlaceRentalApp.API.Models;
 using PlaceRentalApp.API.Persistence;
-using PlaceRentalApp.API.ValueObjects;
 
 namespace PlaceRentalApp.API.Controllers
 {
