@@ -35,6 +35,7 @@ namespace PlaceRentalApp.API.Controllers
             var user = new User(model.FullName, model.Email, model.BirtDate);
 
             _context.Users.Add(user);
+            _context.SaveChanges();
 
             return CreatedAtAction(nameof(GetById), new { id = user.Id }, model);
         }
