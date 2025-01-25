@@ -1,5 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
 using PlaceRentalApp.API.Middlewares;
+using PlaceRentalApp.API.Persistence;
 
 namespace PlaceRentalApp.API
 {
@@ -14,6 +16,17 @@ namespace PlaceRentalApp.API
             builder.Services.AddProblemDetails();
 
             // Add services to the container.
+
+            //builder.Services.AddSingleton<PlaceRentalDbContext>();
+            var connectionString = builder.Configuration
+                .GetConnectionString("PlaceRentalCs");
+
+            // DataBase In Memory
+            //builder.Services.AddDbContext<PlaceRentalDbContext>(
+            //    o => o.UseInMemoryDatabase("PlaceRentaDb"));
+
+            builder.Services.AddDbContext<PlaceRentalDbContext>(
+                o => o.UseSqlServer(connectionString));
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

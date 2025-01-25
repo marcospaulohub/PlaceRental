@@ -2,6 +2,7 @@
 {
     public class User : BaseEntity
     {
+        protected User() { }
         public User(string fullName, string email, DateTime birtDate)
             : base()
         {
