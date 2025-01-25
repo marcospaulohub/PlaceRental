@@ -2,6 +2,7 @@
 {
     public class Amenity : BaseEntity
     {
+        protected Amenity() { }
         public Amenity(string description, int idPlace)
             : base()
         {

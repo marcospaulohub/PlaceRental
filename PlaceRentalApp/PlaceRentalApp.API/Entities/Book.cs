@@ -2,6 +2,7 @@
 {
     public class Book : BaseEntity
     {
+        protected Book() { }
         public Book(int idUser, int idPlace, DateTime startDate, DateTime endDate, string comments)
             : base()
         {
