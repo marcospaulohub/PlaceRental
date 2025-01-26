@@ -5,8 +5,8 @@ namespace PlaceRentalApp.Application.Services.Interfaces
 {
     public interface IPlaceService
     {
-        List<Place> GetAllAvailable(string search, DateTime startDate, DateTime endDate);
-        Place? GetById(int id);
+        List<PlaceViewModel> GetAllAvailable(string search, DateTime startDate, DateTime endDate);
+        PlaceDetailsViewModel? GetById(int id);
         int InsertPlace(CreatePlaceInputModel model);
         void UpdatePlace(int id, UpdatePlaceInputModel model);
         void DeletePlace(int id);
