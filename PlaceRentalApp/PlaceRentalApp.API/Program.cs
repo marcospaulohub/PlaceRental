@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using PlaceRentalApp.API.Middlewares;
+using PlaceRentalApp.Application.Services;
+using PlaceRentalApp.Application.Services.Interfaces;
 using PlaceRentalApp.Infrastructure.Persistence;
 
 namespace PlaceRentalApp.API
@@ -25,6 +27,8 @@ namespace PlaceRentalApp.API
             //builder.Services.AddDbContext<PlaceRentalDbContext>(
             //    o => o.UseInMemoryDatabase("PlaceRentaDb"));
 
+            builder.Services.AddScoped<IPlaceService, PlaceService>();
+            builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddDbContext<PlaceRentalDbContext>(
                 o => o.UseSqlServer(connectionString));
 
