@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlaceRentalApp.API.Entities;
-using PlaceRentalApp.API.Models;
-using PlaceRentalApp.API.Persistence;
-using PlaceRentalApp.API.ValueObjects;
+using PlaceRentalApp.Application.Models;
+using PlaceRentalApp.Application.Services.Interfaces;
 
 namespace PlaceRentalApp.API.Controllers
 {
@@ -10,109 +8,63 @@ namespace PlaceRentalApp.API.Controllers
     [ApiController]
     public class PlacesController : ControllerBase
     {
-        private readonly PlaceRentalDbContext _context;
+        private readonly IPlaceService _placeService;
 
-        public PlacesController(PlaceRentalDbContext context)
+        public PlacesController(IPlaceService placeService)
         {
-            _context = context;
+            _placeService = placeService;
         }
-
 
         //GET api/places?search=casa&startDate=2025-01-20
         [HttpGet]
         public IActionResult Get(string search, DateTime startDate, DateTime endDate)
         {
-            var availablePlaces = _context
-                .Places
-                .Where(p =>
-                    p.Title.Contains(search) &&
-                    !p.Books.Any(b =>
-                    (startDate >= b.StartDate && startDate <= b.EndDate) ||
-                    (endDate >= b.StartDate && endDate <= b.EndDate) ||
-                    (startDate <= b.StartDate && endDate >= b.EndDate))
-                    && !p.IsDeleted);
+            var result = _placeService.GetAllAvailable(search, startDate, endDate);  
 
-            return Ok(availablePlaces);
+            return Ok(result);
         }
 
-        //GET api/places/1234
+        //GET api/places/1234 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) 
-        { 
-            var place = _context.Places.SingleOrDefault(p => p.Id == id);
+        public IActionResult GetById(int id)
+        {
+            var result = _placeService.GetById(id);
 
-            if (place is null)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
 
-            return Ok(place);
+            return Ok(result);
         }
 
         //POST api/places
         [HttpPost]
-        public IActionResult Post(CreatePlaceInputModel model) 
+        public IActionResult Post(CreatePlaceInputModel model)
         {
-            var addres = new Address(
-                model.Address.Street,
-                model.Address.Number,
-                model.Address.ZipCode,
-                model.Address.District,
-                model.Address.City,
-                model.Address.State,
-                model.Address.Country
-                );
+            var result = _placeService.InsertPlace(model);
 
-            var place = new Place(
-                model.Title,
-                model.Description,
-                model.DailyPrice,
-                addres,
-                model.AllowedNumberPerson,
-                model.AllowPets,
-                model.CreatedBy
-                );
-
-            _context.Places.Add(place);
-            _context.SaveChanges();
-
-            return CreatedAtAction(nameof(GetById), new { id = place.Id }, model);
+            return CreatedAtAction(nameof(GetById), new { id = result.Data }, model);
         }
 
         //PUT api/places/1234
         [HttpPut("{id}")]
-        public IActionResult Put(int id,UpdatePlaceInputModel model) 
+        public IActionResult Put(int id, UpdatePlaceInputModel model)
         {
-            var place = _context.Places.SingleOrDefault(p => p.Id == id);
+            var result = _placeService.UpdatePlace(id, model);
 
-            if (place is null)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
-
-            place.Update(model.Title, model.Description, model.DailyPrice);
-
-            _context.Places.Update(place);
-            _context.SaveChanges();
 
             return NoContent();
         }
-        
+
         // DELETE api/places/1234 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var place = _context.Places.SingleOrDefault(p => p.Id == id);
+            var result = _placeService.DeletePlace(id);
 
-            if (place is null)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
-
-            place.SetAsDeleted();
-
-            _context.Places.Update(place);
-            _context.SaveChanges();
 
             return NoContent();
         }
@@ -121,37 +73,22 @@ namespace PlaceRentalApp.API.Controllers
         [HttpPost("{id}/amenities")]
         public IActionResult PostAmenity(int id, CreateAmenityInputModel model)
         {
-            var exists = _context.Places.Any(p => p.Id == id);
+            var result = _placeService.InsertAmenity(id, model);
 
-            if (!exists)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
-
-            var amenity = new Amenity(model.Description, id);
-
-            _context.Amenities.Add(amenity);
-            _context.SaveChanges();
 
             return NoContent();
         }
-
 
         // POST api/places/1234/books
         [HttpPost("{id}/books")]
         public IActionResult PostBook(int id, CreateBookInputModel model)
         {
-            var exists = _context.Places.Any(p => p.Id == id);
+            var result = _placeService.InsertBook(id, model);
 
-            if (!exists)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
-
-            var book = new Book(model.IdUser, model.IdPlace, model.StartDate, model.EndDate, model.Comments);
-
-            _context.Books.Add(book);
-            _context.SaveChanges();
 
             return NoContent();
         }
@@ -160,17 +97,10 @@ namespace PlaceRentalApp.API.Controllers
         [HttpPost("{id}/comments")]
         public IActionResult PostComment(int id, CreateCommentInputModel model)
         {
-            var place = _context.Places.SingleOrDefault(p => p.Id == id);
+            var result = _placeService.InsertComment(id, model);
 
-            if (place is null)
-            {
+            if (!result.IsSuccess)
                 return NotFound();
-            }
-
-            var comment = new Comment(model.IdUser, model.Comments);
-
-            _context.Comments.Add(comment);
-            _context.SaveChanges();
 
             return NoContent();
         }
