@@ -17,7 +17,7 @@ namespace PlaceRentalApp.Application.Services
             _context = context;
         }
 
-        public List<PlaceViewModel> GetAllAvailable(string search, DateTime startDate, DateTime endDate)
+        public ResultViewModel<List<PlaceViewModel>> GetAllAvailable(string search, DateTime startDate, DateTime endDate)
         {
             var availablePlaces = _context
                  .Places
@@ -34,19 +34,22 @@ namespace PlaceRentalApp.Application.Services
             var list = availablePlaces.Select(
                 PlaceViewModel.FromEntity).ToList();
 
-            return list;
+            return ResultViewModel<List<PlaceViewModel>>.Success(list);
         }
 
-        public PlaceDetailsViewModel? GetById(int id)
+        public ResultViewModel<PlaceDetailsViewModel?> GetById(int id)
         {
-            var place = _context.Places.SingleOrDefault(p => p.Id == id);
+            var place = _context.Places
+                .Include (p => p.User)
+                .Include (p => p.Amenities)
+                .SingleOrDefault(p => p.Id == id);
 
             if (place is null)
-                throw new NotFoundException();
+                return ResultViewModel<PlaceDetailsViewModel?>.Error("Not Found");
 
-            return PlaceDetailsViewModel.FromEntiry(place);
+            return ResultViewModel<PlaceDetailsViewModel?>.Success(PlaceDetailsViewModel.FromEntiry(place));
         }
-        public int InsertPlace(CreatePlaceInputModel model)
+        public ResultViewModel<int> InsertPlace(CreatePlaceInputModel model)
         {
             var addres = new Address(
                 model.Address.Street,
@@ -71,71 +74,81 @@ namespace PlaceRentalApp.Application.Services
             _context.Places.Add(place);
             _context.SaveChanges();
 
-            return place.Id;
+            return ResultViewModel<int>.Success(place.Id);
         }
 
-        public void UpdatePlace(int id, UpdatePlaceInputModel model)
+        public ResultViewModel UpdatePlace(int id, UpdatePlaceInputModel model)
         {
             var place = _context.Places.SingleOrDefault(p => p.Id == id);
 
             if (place is null)
-                throw new NotFoundException();
+                return ResultViewModel.Error("Not Found");
 
             place.Update(model.Title, model.Description, model.DailyPrice);
 
             _context.Places.Update(place);
             _context.SaveChanges();
+
+            return ResultViewModel.Success();
         }
-        public void DeletePlace(int id)
+        public ResultViewModel DeletePlace(int id)
         {
             var place = _context.Places.SingleOrDefault(p => p.Id == id);
 
             if (place is null)
-                throw new NotFoundException();
+                return ResultViewModel.Error("Not Found");
 
             place.SetAsDeleted();
 
             _context.Places.Update(place);
             _context.SaveChanges();
+
+            return ResultViewModel.Success();
         }
 
-        public void InsertAmenity(int id, CreateAmenityInputModel model)
+        public ResultViewModel InsertAmenity(int id, CreateAmenityInputModel model)
         {
             var exists = _context.Places.Any(p => p.Id == id);
 
             if (!exists)
-                throw new NotFoundException();
+                return ResultViewModel.Error("Not Found");
 
             var amenity = new Amenity(model.Description, id);
 
             _context.Amenities.Add(amenity);
             _context.SaveChanges();
+
+            return ResultViewModel.Success();
         }
 
-        public void InsertBook(int id, CreateBookInputModel model)
+        public ResultViewModel InsertBook(int id, CreateBookInputModel model)
         {
             var exists = _context.Places.Any(p => p.Id == id);
 
             if (!exists)
-                throw new NotFoundException();
+                return ResultViewModel.Error("Not Found");
 
-            var book = new Book(model.IdUser, model.IdPlace, model.StartDate, model.EndDate, model.Comments);
+             var book = new Book(model.IdUser, model.IdPlace, model.StartDate, model.EndDate, model.Comments);
 
             _context.Books.Add(book);
             _context.SaveChanges();
+
+            return ResultViewModel.Success();
         }
 
-        public void InsertComment(int id, CreateCommentInputModel model)
+        public ResultViewModel InsertComment(int id, CreateCommentInputModel model)
         {
             var place = _context.Places.SingleOrDefault(p => p.Id == id);
 
             if (place is null)
-                throw new NotFoundException();
+                return ResultViewModel.Error("Not Found");
 
             var comment = new Comment(model.IdUser, model.Comments);
 
             _context.Comments.Add(comment);
             _context.SaveChanges();
+
+            return ResultViewModel.Success();
         }
 
     }
