@@ -18,17 +18,20 @@ namespace PlaceRentalApp.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var user = _userService.GetById(id);
+            var result = _userService.GetById(id);
 
-            return Ok(user);
+            if(!result.IsSuccess)
+                return NotFound();
+
+            return Ok(result);
         }
 
         [HttpPost]
         public IActionResult Post(CreateUserInputModel model)
         {
-            var userId = _userService.InsertUser(model);
+            var result = _userService.InsertUser(model);
 
-            return CreatedAtAction(nameof(GetById), new { id = userId }, model);
+            return CreatedAtAction(nameof(GetById), new { id = result.Data }, model);
         }
 
     }
