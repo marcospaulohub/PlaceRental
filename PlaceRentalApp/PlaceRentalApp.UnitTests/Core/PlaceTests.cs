@@ -126,10 +126,15 @@ namespace PlaceRentalApp.UnitTests.Core
             Assert.False(isBookAllowed);
         }
 
+        public static IEnumerable<object[]> GetIsBookAllowedParams()
+        {
+            yield return [4, true, 2, true, true];
+            yield return [4, false, 3, true, false];
+            yield return [4, true, 5, true, false];
+        }
+
         [Theory]
-        [InlineData(4, true, 2, true, true)]
-        [InlineData(4, false, 3, true, false)]
-        [InlineData(4, true, 5, true, false)]
+        [MemberData(nameof(GetIsBookAllowedParams))]
         public void IsBookAllowed(
             int allowedNumberOfPerson, 
             bool acceptPets, 
