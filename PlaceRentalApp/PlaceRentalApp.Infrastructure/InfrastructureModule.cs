@@ -34,6 +34,7 @@ namespace PlaceRentalApp.Infrastructure
         private static IServiceCollection AddRepository(this IServiceCollection services)
         {
             services.AddScoped<IPlaceRepository, PlaceRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
