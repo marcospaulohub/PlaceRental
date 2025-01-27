@@ -66,66 +66,6 @@ namespace PlaceRentalApp.UnitTests.Core
             Assert.NotEqual(newDailyPrice, place.DailyPrice);
         }
 
-        [Fact]
-        public void IsBookAllowed_AmountOfPersonAndPetOk_Succes()
-        {
-            // Arrange
-            var place = new Place(
-                "Title",
-                "Teste Description",
-                100m,
-                new Address("Street", "Number", "ZipCode", "District", "City", "State", "Country"),
-                4,
-                true,
-                123);
-
-            // Act
-            var isBookAllowed = place.IsBookAllowed(true, 2);
-
-            // Assert
-            Assert.True(isBookAllowed);
-        }
-
-        [Fact]
-        public void IsBookAllowed_HasPetButNotAllowed_False()
-        {
-            // Arrange
-            var place = new Place(
-               "Title",
-               "Teste Description",
-               100m,
-               new Address("Street", "Number", "ZipCode", "District", "City", "State", "Country"),
-               4,
-               false,
-               123);
-
-            // Act
-            var isBookAllowed = place.IsBookAllowed(true, 3);
-
-            // Assert
-            Assert.False(isBookAllowed);
-        }
-
-        [Fact]
-        public void IsBookAllowed_OverMaximumAllowedPerson_False()
-        {
-            // Arrange
-            var place = new Place(
-              "Title",
-              "Teste Description",
-              100m,
-              new Address("Street", "Number", "ZipCode", "District", "City", "State", "Country"),
-              4,
-              true,
-              123);
-
-            // Act
-            var isBookAllowed = place.IsBookAllowed(true, 5);
-
-            // Assert
-            Assert.False(isBookAllowed);
-        }
-
         public static IEnumerable<object[]> GetIsBookAllowedParams()
         {
             yield return [4, true, 2, true, true];
