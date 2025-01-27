@@ -56,9 +56,9 @@ namespace PlaceRentalApp.Application.Services
                 model.CreatedBy
                 );
 
-            _placeRepository.AddPlace(place);
+            var placeId = _placeRepository.AddPlace(place);
 
-            return ResultViewModel<int>.Success(place.Id);
+            return ResultViewModel<int>.Success(placeId);
         }
         public ResultViewModel UpdatePlace(int id, UpdatePlaceInputModel model)
         {

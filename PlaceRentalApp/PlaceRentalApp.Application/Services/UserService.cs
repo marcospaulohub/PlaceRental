@@ -28,9 +28,9 @@ namespace PlaceRentalApp.Application.Services
         {
             var user = new User(model.FullName, model.Email, model.BirtDate);
 
-            _userRepository.AddUser(user);
+            var userId = _userRepository.AddUser(user);
 
-            return ResultViewModel<int>.Success(user.Id);
+            return ResultViewModel<int>.Success(userId);
         }
     }
 }
