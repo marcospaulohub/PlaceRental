@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PlaceRentalApp.UnitTests.Core
+namespace PlaceRentalApp.Test.Core
 {
     public class PlaceTests
     {
@@ -76,9 +76,9 @@ namespace PlaceRentalApp.UnitTests.Core
         [Theory]
         [MemberData(nameof(GetIsBookAllowedParams))]
         public void IsBookAllowed(
-            int allowedNumberOfPerson, 
-            bool acceptPets, 
-            int amountOfPerson, 
+            int allowedNumberOfPerson,
+            bool acceptPets,
+            int amountOfPerson,
             bool hasPet,
             bool result)
         {

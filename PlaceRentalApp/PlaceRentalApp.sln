@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceRentalApp.Core", "Plac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceRentalApp.Application", "PlaceRentalApp.Application\PlaceRentalApp.Application.csproj", "{450C8B61-723E-4BC0-B5D8-802E7181D59B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5D05EBED-4642-4D11-B0CE-A21112C43006}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaceRentalApp.UnitTests", "PlaceRentalApp.UnitTests\PlaceRentalApp.UnitTests.csproj", "{94A6347A-DEBD-48DF-B9C9-CA4F1ABFD8BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaceRentalApp.Test", "PlaceRentalApp.UnitTests\PlaceRentalApp.Test.csproj", "{94A6347A-DEBD-48DF-B9C9-CA4F1ABFD8BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,9 +42,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{94A6347A-DEBD-48DF-B9C9-CA4F1ABFD8BE} = {5D05EBED-4642-4D11-B0CE-A21112C43006}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5D821C1-0C9E-4197-81F0-30F2A203BBBC}

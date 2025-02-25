@@ -5,7 +5,7 @@ using PlaceRentalApp.Application.Services;
 using PlaceRentalApp.Core.Entities;
 using PlaceRentalApp.Core.IRepositories;
 
-namespace PlaceRentalApp.UnitTests.Application
+namespace PlaceRentalApp.Test.Application
 {
     public class PlaceServiceTests
     {
