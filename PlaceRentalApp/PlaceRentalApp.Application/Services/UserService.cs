@@ -26,7 +26,7 @@ namespace PlaceRentalApp.Application.Services
 
         public ResultViewModel<int> InsertUser(CreateUserInputModel model)
         {
-            var user = new User(model.FullName, model.Email, model.BirtDate);
+            var user = new User(model.FullName, model.Email, model.BirtDate, model.Password, model.Role);
 
             var userId = _userRepository.AddUser(user);
 
