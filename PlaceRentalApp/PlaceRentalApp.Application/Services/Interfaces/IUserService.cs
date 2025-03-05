@@ -6,5 +6,6 @@ namespace PlaceRentalApp.Application.Services.Interfaces
     {
         ResultViewModel<UserViewModel?> GetById(int id);
         ResultViewModel<int> InsertUser(CreateUserInputModel model);
+        ResultViewModel<LoginViewModel?> Login(LoginInputModel model);
     }
 }
