@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PlaceRentalApp.Application.Models;
 using PlaceRentalApp.Application.Services.Interfaces;
 using PlaceRentalApp.Infrastructure.Persistence;
@@ -7,6 +8,7 @@ namespace PlaceRentalApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -16,6 +18,7 @@ namespace PlaceRentalApp.API.Controllers
         }
 
         [HttpGet("{id}")]
+        
         public IActionResult GetById(int id)
         {
             var result = _userService.GetById(id);
@@ -34,5 +37,16 @@ namespace PlaceRentalApp.API.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Data }, model);
         }
 
+        [HttpPut("login")]
+        [AllowAnonymous]
+        public IActionResult Login(LoginInputModel model)
+        {
+            var result = _userService.Login(model);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
     }
 }
